@@ -1,9 +1,9 @@
 import { Model, DataTypes} from 'sequelize';
 import db from '.';
-// import OtherModel from './OtherModel';
+import Matchs from './matchs';
 
 class Clubs extends Model {
-  public id!: number;
+  declare id: number;
   public clubName!: string;
 }
 
@@ -34,7 +34,7 @@ Clubs.init({
 // OtherModel.belongsTo(Example, { foreignKey: 'campoA', as: 'campoEstrangeiroA' });
 // OtherModel.belongsTo(Example, { foreignKey: 'campoB', as: 'campoEstrangeiroB' });
 
-// Example.hasMany(OtherModel, { foreignKey: 'campoC', as: 'campoEstrangeiroC' });
-// Example.hasMany(OtherModel, { foreignKey: 'campoD', as: 'campoEstrangeiroD' });
+Matchs.hasMany(Clubs, { foreignKey: 'homeTeam', as: 'match' });
+Matchs.hasMany(Clubs, { foreignKey: 'awayTeam', as: 'match' });
 
 export default Clubs;
