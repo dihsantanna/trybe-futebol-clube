@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Matchs', {
+    await queryInterface.createTable('matchs', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,30 +9,30 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       home_team: {
-        type: Sequelize.NUMBER,
-        foreignKey: true,
         allowNull: false,
+        foreignKey: true,
+        type: Sequelize.INTEGER
       },
       home_team_goals: {
-        type: Sequelize.NUMBER,
         allowNull: false,
+        type: Sequelize.INTEGER
       },
       away_team: {
-        type: Sequelize.NUMBER,
-        foreignKey: true,
         allowNull: false,
+        foreignKey: true,
+        type: Sequelize.INTEGER
       },
       away_team_goals: {
-        type: Sequelize.NUMBER,
         allowNull: false,
+        type: Sequelize.INTEGER
       },
       in_progress: {
-        type: Sequelize.NUMBER,
         allowNull: false,
+        type: Sequelize.BOOLEAN
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Matchs');
+    await queryInterface.dropTable('matchs');
   }
 };
