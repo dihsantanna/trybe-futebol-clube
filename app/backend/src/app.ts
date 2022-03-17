@@ -1,4 +1,6 @@
 import * as express from 'express';
+import cors = require('cors');
+import bodyParser = require('body-parser');
 
 class App {
   public app: express.Express;
@@ -6,6 +8,7 @@ class App {
 
   constructor() {
     // ...
+    this.app = express();
     this.config();
     // ...
   }
@@ -19,12 +22,16 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(cors());
+    this.app.use(bodyParser.json());
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
-    // ...
+    this.app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}`)
+    })
   }
 }
 
