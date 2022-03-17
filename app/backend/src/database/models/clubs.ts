@@ -1,8 +1,9 @@
-import { Model, DataTypes} from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import db from '.';
 
 class Clubs extends Model {
   declare id: number;
+
   public clubName!: string;
 }
 

@@ -3,9 +3,13 @@ import db from '.';
 
 class Users extends Model {
   declare id: number;
+
   public username!: string;
+
   public role!: string;
+
   public email!: string;
+
   public password!: string;
 }
 
