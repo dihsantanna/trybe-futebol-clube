@@ -13,7 +13,7 @@ module.exports = {
         foreignKey: true,
         type: Sequelize.INTEGER,
         references: {
-          model: 'club',
+          model: 'clubs',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -28,7 +28,7 @@ module.exports = {
         foreignKey: true,
         type: Sequelize.INTEGER,
         references: {
-          model: 'club',
+          model: 'clubs',
           key: 'id',
         },
         onUpdate: 'CASCADE',
