@@ -4,13 +4,10 @@ import bodyParser = require('body-parser');
 
 class App {
   public app: express.Express;
-  // ...
 
   constructor() {
-    // ...
     this.app = express();
     this.config();
-    // ...
   }
 
   private config():void {
@@ -24,10 +21,8 @@ class App {
     this.app.use(accessControl);
     this.app.use(cors());
     this.app.use(bodyParser.json());
-    // ...
   }
 
-  // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}`);

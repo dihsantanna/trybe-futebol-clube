@@ -16,8 +16,9 @@ Clubs.init({
 }, {
   underscored: true,
   sequelize: db,
-  modelName: 'Clubs',
+  modelName: 'club',
   timestamps: false,
+  tableName: 'clubs',
 });
 
 export default Clubs;
