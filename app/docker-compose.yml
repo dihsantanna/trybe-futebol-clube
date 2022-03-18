@@ -29,7 +29,7 @@ services:
       - DB_NAME=TRYBE_FUTEBOL_CLUBE
       - DB_PORT=3306
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3306"] # Caso utilize outra porta interna para o back, altere ela aqui também
+      test: ["CMD", "lsof", "-t", "-i:3301"] # Caso utilize outra porta interna para o back, altere ela aqui também
       timeout: 10s
       retries: 5
   db:
@@ -46,4 +46,3 @@ services:
       retries: 5
     cap_add:
       - SYS_NICE # Deve omitir alertas menores
-      
