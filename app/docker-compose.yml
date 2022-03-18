@@ -15,7 +15,6 @@ services:
       retries: 5
   backend:
     build: ./backend
-
     depends_on:
       db:
         condition: service_healthy
@@ -29,7 +28,7 @@ services:
       - DB_NAME=TRYBE_FUTEBOL_CLUBE
       - DB_PORT=3306
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3301"] # Caso utilize outra porta interna para o back, altere ela aqui também
+      test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
       timeout: 10s
       retries: 5
   db:
