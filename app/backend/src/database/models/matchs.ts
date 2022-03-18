@@ -17,7 +17,10 @@ class Matchs extends Model {
 }
 
 Matchs.init({
-  id: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
   homeTeam: DataTypes.INTEGER,
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,

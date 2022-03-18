@@ -8,7 +8,10 @@ class Clubs extends Model {
 }
 
 Clubs.init({
-  id: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
   club_name: DataTypes.STRING,
 }, {
   underscored: true,

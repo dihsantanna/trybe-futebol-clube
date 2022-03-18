@@ -14,7 +14,10 @@ class Users extends Model {
 }
 
 Users.init({
-  id: DataTypes.INTEGER,
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
   username: DataTypes.STRING,
   role: DataTypes.STRING,
   email: DataTypes.STRING,
