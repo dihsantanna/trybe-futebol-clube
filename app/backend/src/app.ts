@@ -1,4 +1,5 @@
 import * as express from 'express';
+import bodyParser = require('body-parser');
 import cors = require('cors');
 
 class App {
@@ -19,7 +20,7 @@ class App {
 
     this.app.use(accessControl);
     this.app.use(cors());
-    this.app.use(express.json());
+    this.app.use(bodyParser.json());
   }
 
   public start(PORT: string | number):void {
