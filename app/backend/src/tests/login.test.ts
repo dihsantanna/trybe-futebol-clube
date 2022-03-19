@@ -35,7 +35,7 @@ describe('Testa endpoint POST /login', () => {
 
   before(async () => {
     sinon
-      .stub(Users, "findOne")
+      .stub(Users, 'findOne')
       .resolves({
         ...usersMock[0]
       } as Users);
@@ -67,9 +67,8 @@ describe('Testa endpoint POST /login', () => {
     });
 
     it('retorna no body um objeto com as chaves "user"(`id`, `username`, `role`, `email`) e "token"', () => {
-      expect(chaiHttpResponse.body).to.have.key('user');
+      expect(chaiHttpResponse.body).to.have.all.keys('user', 'token');
       expect(chaiHttpResponse.body.user).to.have.all.keys('id', 'username', 'role', 'email');
-      expect(chaiHttpResponse.body).to.have.key('token');
     });
 
     it('retorna no body os valores esperados', () => {
