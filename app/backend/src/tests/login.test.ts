@@ -1,6 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
@@ -9,6 +10,7 @@ import usersMock from './mock/UsersMock';
 import tokenMock from './mock/tokenMock';
 import { ILoginResponse } from '../interfaces';
 import code from '../environments/statusCode';
+import usersLogin from './utils/usersLogin';
 
 const loginResponseSuccess: ILoginResponse = {
   user: {
@@ -36,30 +38,30 @@ describe('Testa endpoint POST /login', () => {
   before(async () => {
     sinon
       .stub(Users, 'findOne')
-      .resolves({
-        ...usersMock[0]
-      } as Users);
+      .resolves({ ...usersMock[0] } as Users);
 
-      sinon
-        .stub(jwt, 'sign')
-        .resolves(tokenMock);
+    sinon
+    .stub(jwt, 'sign')
+    .resolves(tokenMock);
+
+    sinon
+    .stub(bcrypt, 'compare')
+    .resolves(true)
   });
 
   after(()=>{
     (Users.findOne as sinon.SinonStub).restore();
     (jwt.sign as sinon.SinonStub).restore();
+    (bcrypt.compare as sinon.SinonStub).restore();
   })
-
+  
   describe('Ao passar "email" e "password" válidos é encontrado com sucesso usuário do DB',
-    () => {
-    before(async () => {
+  () => {
+    before(async () => {  
       chaiHttpResponse = await chai
-         .request(app)
-         .post('/login')
-         .send({
-           email: usersMock[0].email,
-           password: usersMock[0].password,
-         });
+      .request(app)
+      .post('/login')
+      .send({ email: 'admin@admin.com', password: 'secret_admin' });
     });
 
     it('retorna status code "200"', () => {
