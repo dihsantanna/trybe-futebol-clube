@@ -1,7 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcryptjs';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
@@ -11,6 +10,8 @@ import tokenMock from './mock/tokenMock';
 import { ILoginResponse } from '../interfaces';
 import code from '../environments/statusCode';
 import usersLogin from './utils/usersLogin';
+import getChaiHttpResponse from './utils/getChaiHttpResponse';
+import msgs from '../environments/msgsError'
 
 const loginResponseSuccess: ILoginResponse = {
   user: {
@@ -29,40 +30,29 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testa endpoint POST /login', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
   let chaiHttpResponse: Response;
-
-  before(async () => {
-    sinon
-      .stub(Users, 'findOne')
-      .resolves({ ...usersMock[0] } as Users);
-
-    sinon
-    .stub(jwt, 'sign')
-    .resolves(tokenMock);
-
-    sinon
-    .stub(bcrypt, 'compare')
-    .resolves(true)
-  });
-
-  after(()=>{
-    (Users.findOne as sinon.SinonStub).restore();
-    (jwt.sign as sinon.SinonStub).restore();
-    (bcrypt.compare as sinon.SinonStub).restore();
-  })
   
   describe('Ao passar "email" e "password" válidos é encontrado com sucesso usuário do DB',
   () => {
-    before(async () => {  
-      chaiHttpResponse = await chai
-      .request(app)
-      .post('/login')
-      .send(usersLogin.validAdmin);
+    before(async () => { 
+      sinon
+        .stub(Users, 'findOne')
+        .resolves({ ...usersMock[0] } as Users);
+
+      sinon
+        .stub(jwt, 'sign')
+        .resolves(tokenMock);
+
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.validAdmin
+      );
     });
+
+    after(()=>{
+      (Users.findOne as sinon.SinonStub).restore();
+      (jwt.sign as sinon.SinonStub).restore();
+    })
 
     it('retorna status code "200"', () => {
       expect(chaiHttpResponse).to.have.status(code.OK);
@@ -79,8 +69,28 @@ describe('Testa endpoint POST /login', () => {
 
   })
 
-  // describe('Ao passar "email" ou "password" inválidos não é possível efetuar o login', () => {
-  //   it('', async () => {})
-  // })
+  describe('Ao passar "email" ou "password" inválidos não é possível efetuar o login', () => {
+
+    before(async () => {
+      sinon
+        .stub(Users, 'findOne')
+        .resolves(null);
+    })
+
+    after(()=>{
+      (Users.findOne as sinon.SinonStub).restore();
+    })
+      
+    it('ao receber "email" incorreto retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.incorrectAdminEmail
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_INCORRECT);
+    });
+    
+  })
 
 })
