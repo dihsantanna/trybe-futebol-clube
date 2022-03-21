@@ -90,6 +90,26 @@ describe('Testa endpoint POST /login', () => {
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_INCORRECT);
     });
+
+    it('se não receber "email" retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.noAdminEmail
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_FIELDS_UNDEFINED);
+    });
+
+    it('se receber "email" com formato invalido retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.invalidAdminEmail
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_EMAIL_INVALID);
+    });
     
   })
 
