@@ -4,6 +4,7 @@ import { LoginRepository } from '../repositories';
 import { ILogin, ILoginResponse, IUser } from '../../interfaces';
 import code from '../../environments/statusCode';
 import generateToken from '../../utils/generateToken';
+import msgs from '../../environments/msgsError';
 
 @Service()
 export default class LoginService {
@@ -24,6 +25,6 @@ export default class LoginService {
         } as ILoginResponse,
       };
     }
-    return { code: 400, result: '' };
+    return { code: code.UNAUTHORIZED, result: msgs.LOGIN_INCORRECT };
   };
 }

@@ -1,22 +1,26 @@
 import { Router } from 'express';
 import { Service } from 'typedi';
 import { LoginController } from './database/controllers';
+import Validator from './validates';
 
 @Service()
 export default class Routes {
   private _routes: Router;
 
   constructor(
-    private _loginController: LoginController,
+    readonly loginController: LoginController,
+    readonly validator: Validator,
   ) {
     this._routes = Router();
     this._mountRoutes();
   }
 
   private _login() {
+    const { validator, loginController } = this;
     this._routes.post(
       '/login',
-      this._loginController.login,
+      validator.login,
+      loginController.login,
     );
   }
 
