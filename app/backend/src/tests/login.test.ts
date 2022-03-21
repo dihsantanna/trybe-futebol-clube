@@ -61,7 +61,7 @@ describe('Testa endpoint POST /login', () => {
       chaiHttpResponse = await chai
       .request(app)
       .post('/login')
-      .send({ email: 'admin@admin.com', password: 'secret_admin' });
+      .send(usersLogin.validAdmin);
     });
 
     it('retorna status code "200"', () => {

@@ -1,10 +1,14 @@
 import { Router } from 'express';
-import LoginController from './database/controllers/login';
+import { Service } from 'typedi';
+import { LoginController } from './database/controllers';
 
+@Service()
 export default class Routes {
   private _routes: Router;
 
-  constructor() {
+  constructor(
+    private _loginController: LoginController,
+  ) {
     this._routes = Router();
     this._mountRoutes();
   }
@@ -12,7 +16,7 @@ export default class Routes {
   private _login() {
     this._routes.post(
       '/login',
-      LoginController.login,
+      this._loginController.login,
     );
   }
 

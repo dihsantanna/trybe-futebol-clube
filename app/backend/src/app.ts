@@ -1,9 +1,11 @@
+import 'reflect-metadata';
 import * as express from 'express';
+import { Container } from 'typedi';
 import bodyParser = require('body-parser');
 import cors = require('cors');
 import Routes from './routes';
 
-const { routes } = new Routes();
+const { routes } = Container.get(Routes);
 
 class App {
   public app: express.Express;

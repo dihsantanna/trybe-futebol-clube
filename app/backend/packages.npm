@@ -1,3 +1,4 @@
+typedi reflect-metadata
 body-parser@1.19.2
 bcryptjs@2.4.3
---save-dev @types/bcryptjs
+@types/bcryptjs
