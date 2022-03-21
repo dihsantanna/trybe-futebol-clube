@@ -110,6 +110,36 @@ describe('Testa endpoint POST /login', () => {
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_EMAIL_INVALID);
     });
+
+    it('ao receber "password" incorreto retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.incorrectAdminPass
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_INCORRECT);
+    });
+
+    it('se não receber "password" retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.noAdminPass
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_FIELDS_UNDEFINED);
+    });
+
+    it('se receber "password" com menos de 6 caracteres retornará status não-autorizado', async () => {      
+      chaiHttpResponse = await getChaiHttpResponse(
+        '/login',
+        usersLogin.invalidAdminPass
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.LOGIN_PASS_MIN);
+    });
     
   })
 
