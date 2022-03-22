@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { Service } from 'typedi';
 import { LoginController } from './database/controllers';
-import Validator from './validates';
+import Validator from './validations';
 
 @Service()
 export default class Routes {
