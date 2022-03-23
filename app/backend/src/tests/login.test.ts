@@ -3,24 +3,20 @@ import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
 import chaiHttp = require('chai-http');
 
-import { app } from '../app';
 import Users from '../database/models/users';
-import usersMock from './mock/UsersMock';
-import tokenMock from './mock/tokenMock';
+import * as Mock from './mock/';
 import { ILoginResponse } from '../interfaces';
-import code from '../environments/statusCode';
-import usersLogin from './utils/usersLogin';
-import getChaiHttpResponse from './utils/getChaiHttpResponse';
-import msgs from '../environments/msgsError'
+import { StatusCode as code, msgs } from '../environments/';
+import { UsersLogin, getChaiHttpResponse } from './utils/';
 
 const loginResponseSuccess: ILoginResponse = {
   user: {
-    id:usersMock[0].id,
-    username: usersMock[0].username,
-    role: usersMock[0].role,
-    email: usersMock[0].email,
+    id:Mock.Users[0].id,
+    username: Mock.Users[0].username,
+    role: Mock.Users[0].role,
+    email: Mock.Users[0].email,
   },
-  token: tokenMock,
+  token: Mock.token,
 }
 
 import { Response } from 'superagent';
@@ -37,15 +33,16 @@ describe('Testa endpoint POST /login', () => {
     before(async () => { 
       sinon
         .stub(Users, 'findOne')
-        .resolves({ ...usersMock[0] } as Users);
+        .resolves({ ...Mock.Users[0] } as Users);
 
       sinon
         .stub(jwt, 'sign')
-        .resolves(tokenMock);
+        .resolves(Mock.token);
 
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.validAdmin
+        UsersLogin.validAdmin
       );
     });
 
@@ -83,8 +80,9 @@ describe('Testa endpoint POST /login', () => {
       
     it('ao receber "email" incorreto retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.incorrectAdminEmail
+        UsersLogin.incorrectAdminEmail
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -93,8 +91,9 @@ describe('Testa endpoint POST /login', () => {
 
     it('se não receber "email" retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.noAdminEmail
+        UsersLogin.noAdminEmail
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -103,8 +102,9 @@ describe('Testa endpoint POST /login', () => {
 
     it('se receber "email" com formato invalido retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.invalidAdminEmail
+        UsersLogin.invalidAdminEmail
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -113,8 +113,9 @@ describe('Testa endpoint POST /login', () => {
 
     it('ao receber "password" incorreto retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.incorrectAdminPass
+        UsersLogin.incorrectAdminPass
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -123,8 +124,9 @@ describe('Testa endpoint POST /login', () => {
 
     it('se não receber "password" retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.noAdminPass
+        UsersLogin.noAdminPass
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -133,8 +135,9 @@ describe('Testa endpoint POST /login', () => {
 
     it('se receber "password" com menos de 6 caracteres retornará status não-autorizado', async () => {      
       chaiHttpResponse = await getChaiHttpResponse(
+        'POST',
         '/login',
-        usersLogin.invalidAdminPass
+        UsersLogin.invalidAdminPass
       );
 
       expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
@@ -142,5 +145,43 @@ describe('Testa endpoint POST /login', () => {
     });
     
   })
+
+})
+
+describe('Testa endpoint GET /login/validate', () => {
+  let chaiHttpResponse: Response;
+
+  describe('Ao passar token valido no header "Authorization"', () => {
+    before(async () => { 
+      sinon
+        .stub(Users, 'findOne')
+        .resolves({ ...Mock.Users[0] } as Users);
+
+      sinon
+        .stub(jwt, 'verify')
+        .resolves(Mock.Users[0]);
+
+      chaiHttpResponse = await getChaiHttpResponse(
+        'GET',
+        '/login/validate',
+        '',
+        Mock.token,
+      );
+    });
+
+    after(()=>{
+      (Users.findOne as sinon.SinonStub).restore();
+      (jwt.verify as sinon.SinonStub).restore();
+    });
+
+    it('retorna status code 200', () => {
+      expect(chaiHttpResponse).to.have.status(code.OK);
+    });
+
+    it('retorna uma string contendo o "role" do user', () => {
+      expect(chaiHttpResponse.body).to.be.equal(Mock.Users[0].role)
+    });
+
+  });
 
 })
