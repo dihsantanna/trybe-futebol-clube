@@ -1,6 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-import * as jwt from 'jsonwebtoken';
+import HandlerToken from '../utils/handlerToken';
 import chaiHttp = require('chai-http');
 
 import Users from '../database/models/users';
@@ -25,8 +25,8 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+let chaiHttpResponse: Response;
 describe('Testa endpoint POST /login', () => {
-  let chaiHttpResponse: Response;
   
   describe('Ao passar "email" e "password" válidos é encontrado com sucesso usuário do DB',
   () => {
@@ -36,7 +36,7 @@ describe('Testa endpoint POST /login', () => {
         .resolves({ ...Mock.Users[0] } as Users);
 
       sinon
-        .stub(jwt, 'sign')
+        .stub(HandlerToken, 'generate')
         .resolves(Mock.token);
 
       chaiHttpResponse = await getChaiHttpResponse(
@@ -48,7 +48,7 @@ describe('Testa endpoint POST /login', () => {
 
     after(()=>{
       (Users.findOne as sinon.SinonStub).restore();
-      (jwt.sign as sinon.SinonStub).restore();
+      (HandlerToken.generate as sinon.SinonStub).restore();
     })
 
     it('retorna status code "200"', () => {
@@ -149,8 +149,6 @@ describe('Testa endpoint POST /login', () => {
 })
 
 describe('Testa endpoint GET /login/validate', () => {
-  let chaiHttpResponse: Response;
-
   describe('Ao passar token valido no header "Authorization"', () => {
     before(async () => { 
       sinon
@@ -158,20 +156,20 @@ describe('Testa endpoint GET /login/validate', () => {
         .resolves({ ...Mock.Users[0] } as Users);
 
       sinon
-        .stub(jwt, 'verify')
-        .resolves(Mock.Users[0]);
+        .stub(HandlerToken, 'verify')
+        .resolves(Mock.Users[0])
 
       chaiHttpResponse = await getChaiHttpResponse(
         'GET',
         '/login/validate',
-        '',
+        'none',
         Mock.token,
       );
     });
 
     after(()=>{
       (Users.findOne as sinon.SinonStub).restore();
-      (jwt.verify as sinon.SinonStub).restore();
+      (HandlerToken.verify as sinon.SinonStub).restore();
     });
 
     it('retorna status code 200', () => {

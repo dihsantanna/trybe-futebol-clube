@@ -7,4 +7,9 @@ export default class LoginRepository {
     const result = Users.findOne({ where: { email }, raw: true });
     return result;
   };
+
+  findUserById = async (id: number) => {
+    const result = Users.findOne({ where: { id }, raw: true });
+    return result;
+  };
 }

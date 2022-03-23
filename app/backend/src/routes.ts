@@ -22,6 +22,11 @@ export default class Routes {
       validator.login,
       loginController.login,
     );
+
+    this._routes.get(
+      '/login/validate',
+      loginController.validate,
+    );
   }
 
   private _mountRoutes() {

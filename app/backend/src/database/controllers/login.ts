@@ -13,4 +13,10 @@ export default class LoginController {
     const { code, result } = await this.loginService.login(body);
     res.status(code).json(result);
   };
+
+  validate = async (req: Request, res: Response) => {
+    const { authorization } = req.headers;
+    const { code, result } = await this.loginService.validate(authorization as string);
+    res.status(code).json(result);
+  };
 }
