@@ -1,7 +1,7 @@
 import jwt = require('jsonwebtoken');
 import { readFile } from 'fs/promises';
 import { Service } from 'typedi';
-import { IUser, IVerifyError } from '../../interfaces';
+import { IUser, IVerifyError } from '../interfaces';
 
 @Service()
 class HandlerToken {

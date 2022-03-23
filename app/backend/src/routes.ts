@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Service } from 'typedi';
-import { LoginController } from './database/controllers';
+import * as Controllers from './database/controllers';
 import Validator from './validations';
 
 @Service()
@@ -8,7 +8,8 @@ export default class Routes {
   private _routes: Router;
 
   constructor(
-    readonly loginController: LoginController,
+    readonly loginController: Controllers.Login,
+    readonly clubsController: Controllers.Clubs,
     readonly validator: Validator,
   ) {
     this._routes = Router();
@@ -16,21 +17,35 @@ export default class Routes {
   }
 
   private _login() {
-    const { validator, loginController } = this;
-    this._routes.post(
+    const { validator, loginController, _routes: route } = this;
+    route.post(
       '/login',
       validator.login,
       loginController.login,
     );
 
-    this._routes.get(
+    route.get(
       '/login/validate',
       loginController.validate,
     );
   }
 
+  private _clubs() {
+    const { clubsController, _routes: route } = this;
+    route.get(
+      '/clubs',
+      clubsController.getAll,
+    );
+
+    route.get(
+      '/clubs/:id',
+      clubsController.getById,
+    );
+  }
+
   private _mountRoutes() {
     this._login();
+    this._clubs();
   }
 
   get routes() {

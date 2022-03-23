@@ -1,8 +1,7 @@
-import LoginRepository from './login';
-
-const enganaLint = '';
+import Login from './login';
+import Clubs from './clubs';
 
 export {
-  LoginRepository,
-  enganaLint,
+  Login,
+  Clubs,
 };

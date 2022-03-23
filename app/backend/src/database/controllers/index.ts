@@ -1,8 +1,7 @@
-import LoginController from './login';
-
-const enganaLint = '';
+import Login from './login';
+import Clubs from './clubs';
 
 export {
-  LoginController,
-  enganaLint,
+  Login,
+  Clubs,
 };
