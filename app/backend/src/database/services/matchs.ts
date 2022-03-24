@@ -1,4 +1,5 @@
 import { Service } from 'typedi';
+import { IMatchs } from '../../interfaces';
 import * as Repository from '../repositories';
 import code from '../../environments/statusCode';
 
@@ -10,14 +11,21 @@ export default class MatchsService {
 
   getAll = async () => {
     const { matchsRepository } = this;
-    const matchs = await matchsRepository.findAll();
-    return { code: code.OK, result: matchs };
+    const result = await matchsRepository.findAll();
+    return { code: code.OK, result };
   };
 
   getByInProgress = async (inProgress: boolean) => {
     const { matchsRepository } = this;
-    const matchs = await matchsRepository.findByInProgress(inProgress);
+    const result = await matchsRepository.findByInProgress(inProgress);
 
-    return { code: code.OK, result: matchs };
+    return { code: code.OK, result };
+  };
+
+  create = async (match: IMatchs) => {
+    const { matchsRepository } = this;
+    const result = await matchsRepository.create(match);
+
+    return { code: code.CREATED, result };
   };
 }

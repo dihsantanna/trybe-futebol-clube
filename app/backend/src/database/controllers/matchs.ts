@@ -21,4 +21,11 @@ export default class MatchsController {
     const { code, result } = await matchsService.getByInProgress(inProgress === 'true');
     res.status(code).json(result);
   };
+
+  create = async (req: Request, res: Response) => {
+    const { matchsService } = this;
+    const { body } = req;
+    const { code, result } = await matchsService.create(body);
+    res.status(code).json(result);
+  };
 }

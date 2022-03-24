@@ -1,6 +1,7 @@
 import { Service } from 'typedi';
 import Matchs from '../models/matchs';
 import Clubs from '../models/clubs';
+import { IMatchs } from '../../interfaces';
 
 @Service()
 export default class MatchsRepository {
@@ -34,6 +35,12 @@ export default class MatchsRepository {
         attributes: ['clubName'],
       }],
     });
+    return result;
+  };
+
+  create = async (match: IMatchs) => {
+    const result = await Matchs.create(match);
+
     return result;
   };
 }

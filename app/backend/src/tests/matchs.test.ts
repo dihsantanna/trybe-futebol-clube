@@ -128,7 +128,7 @@ describe('Testa endpoint POST /matchs', () => {
     before(async () => {
       sinon
         .stub(Matchs, 'create')
-        .resolves({ dataValues: matchsCreatedInProgress} as unknown as Matchs);
+        .resolves(matchsCreatedInProgress as unknown as Matchs);
 
       sinon
         .stub(Clubs, 'findAll')
@@ -167,7 +167,7 @@ describe('Testa endpoint POST /matchs', () => {
     before(async () => {
       sinon
         .stub(Matchs, 'create')
-        .resolves({ dataValues: matchsCreatedFinished} as unknown as Matchs);
+        .resolves(matchsCreatedFinished as unknown as Matchs);
 
       sinon
       .stub(Clubs, 'findAll')

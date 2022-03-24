@@ -51,6 +51,11 @@ export default class Routes {
       matchsController.getAll,
       matchsController.getByInProgress,
     );
+
+    route.post(
+      '/matchs',
+      matchsController.create,
+    );
   }
 
   private _mountRoutes() {
