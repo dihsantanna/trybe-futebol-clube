@@ -45,7 +45,7 @@ export default class Routes {
   }
 
   private _matchs() {
-    const { matchsController, _routes: route } = this;
+    const { matchsController, _routes: route, validator } = this;
     route.get(
       '/matchs',
       matchsController.getAll,
@@ -54,6 +54,7 @@ export default class Routes {
 
     route.post(
       '/matchs',
+      validator.token,
       matchsController.create,
     );
   }
