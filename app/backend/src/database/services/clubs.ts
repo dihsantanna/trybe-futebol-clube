@@ -20,7 +20,7 @@ export default class ClubsService {
     const club = await clubsRepository.findById(Number(id));
 
     if (!club) {
-      return { code: code.BAD_REQUEST, result: msgs.CLUB_NOT_EXISTS };
+      return { code: code.BAD_REQUEST, result: msgs.TEAM_NOT_FOUND };
     }
 
     return { code: code.OK, result: club };

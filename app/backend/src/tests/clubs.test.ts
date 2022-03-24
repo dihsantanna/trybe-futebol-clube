@@ -94,7 +94,7 @@ describe('Testa endpoint GET /clubs/:id', () => {
     });
   
     it('verifica se retorna o mensagem de erro', () => {
-      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.CLUB_NOT_EXISTS);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.TEAM_NOT_FOUND);
     })
   })
 

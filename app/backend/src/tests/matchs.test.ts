@@ -131,8 +131,8 @@ describe('Testa endpoint POST /matchs', () => {
         .resolves(matchsCreatedInProgress as unknown as Matchs);
 
       sinon
-        .stub(Clubs, 'findAll')
-        .resolves(clubsMock);
+        .stub(Clubs, 'findAndCountAll')
+        .resolves({ count: 2, rows: clubsMock});
 
       chaiHttpResponse = await getChaiHttpResponse(
         'POST',
@@ -144,7 +144,7 @@ describe('Testa endpoint POST /matchs', () => {
 
     after(() => {
       (Matchs.create as sinon.SinonStub).restore();
-      (Clubs.findAll as sinon.SinonStub).restore();
+      (Clubs.findAndCountAll as sinon.SinonStub).restore();
     });
 
     it('retorna status code 201', () => {
@@ -170,8 +170,8 @@ describe('Testa endpoint POST /matchs', () => {
         .resolves(matchsCreatedFinished as unknown as Matchs);
 
       sinon
-      .stub(Clubs, 'findAll')
-      .resolves(clubsMock);
+      .stub(Clubs, 'findAndCountAll')
+      .resolves({ count: 2, rows: clubsMock});
 
       chaiHttpResponse = await getChaiHttpResponse(
         'POST',
@@ -183,7 +183,7 @@ describe('Testa endpoint POST /matchs', () => {
 
     after(() => {
       (Matchs.create as sinon.SinonStub).restore();
-      (Clubs.findAll as sinon.SinonStub).restore();
+      (Clubs.findAndCountAll as sinon.SinonStub).restore();
     });
 
     it('retorna status code 201', () => {
@@ -330,8 +330,8 @@ describe('Testa endpoint POST /matchs', () => {
 
       before(async () => {
         sinon
-          .stub(Clubs, 'findAll')
-          .resolves(clubsMock);
+          .stub(Clubs, 'findAndCountAll')
+          .resolves({ count: 1, rows: clubsMock});
 
         chaiHttpResponse = await getChaiHttpResponse(
           'POST',
@@ -343,7 +343,7 @@ describe('Testa endpoint POST /matchs', () => {
       });
 
       after(() => {
-        (Clubs.findAll as sinon.SinonStub).restore();
+        (Clubs.findAndCountAll as sinon.SinonStub).restore();
       });
 
       it('retorna status code 400', () => {
@@ -365,8 +365,8 @@ describe('Testa endpoint POST /matchs', () => {
 
       before(async () => {
         sinon
-          .stub(Clubs, 'findAll')
-          .resolves(clubsMock);
+          .stub(Clubs, 'findAndCountAll')
+          .resolves({ count: 1, rows: clubsMock});
 
         chaiHttpResponse = await getChaiHttpResponse(
           'POST',
@@ -378,7 +378,7 @@ describe('Testa endpoint POST /matchs', () => {
       });
 
       after(() => {
-        (Clubs.findAll as sinon.SinonStub).restore();
+        (Clubs.findAndCountAll as sinon.SinonStub).restore();
       });
 
       it('retorna status code 400', () => {
