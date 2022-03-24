@@ -55,6 +55,7 @@ export default class Routes {
     route.post(
       '/matchs',
       validator.token,
+      validator.matchs,
       matchsController.create,
     );
   }

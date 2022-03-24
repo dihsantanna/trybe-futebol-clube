@@ -1,5 +1,4 @@
 interface IMatchs {
-  id: number,
   homeTeam: number,
   homeTeamGoals: number,
   awayTeam: number,

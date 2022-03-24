@@ -19,8 +19,14 @@ export default class Validator {
     const { authorization } = req.headers;
     if (!authorization) return res.status(code.UNAUTHORIZED).json(msgs.TOKEN_REQUIRED);
     const { error } = await HandlerToken.verify(authorization) as IVerifyError;
-    if (error) res.status(code.UNAUTHORIZED).json(msgs.TOKEN_INVALID);
+    if (error) return res.status(code.UNAUTHORIZED).json(msgs.TOKEN_INVALID);
+    next();
+  };
 
+  matchs = (req: Request, res: Response, next: NextFunction) => {
+    const { body } = req;
+    const { error } = Schemas.MatchsSchema.validate(body);
+    if (error) return res.status(code.BAD_REQUEST).json({ message: error.message });
     next();
   };
 }

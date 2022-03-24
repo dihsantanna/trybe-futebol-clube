@@ -1,8 +1,7 @@
 import LoginSchema from './login';
-
-const enganaLint = '';
+import MatchsSchema from './matchs';
 
 export {
   LoginSchema,
-  enganaLint,
+  MatchsSchema,
 };
