@@ -12,7 +12,7 @@ Clubs.init({
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
-  club_name: DataTypes.STRING,
+  clubName: DataTypes.STRING,
 }, {
   underscored: true,
   sequelize: db,

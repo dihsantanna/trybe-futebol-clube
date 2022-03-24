@@ -10,6 +10,7 @@ export default class Routes {
   constructor(
     readonly loginController: Controllers.Login,
     readonly clubsController: Controllers.Clubs,
+    readonly matchsController: Controllers.Matchs,
     readonly validator: Validator,
   ) {
     this._routes = Router();
@@ -43,9 +44,19 @@ export default class Routes {
     );
   }
 
+  private _matchs() {
+    const { matchsController, _routes: route } = this;
+    route.get(
+      '/matchs',
+      matchsController.getAll,
+      matchsController.getByInProgress,
+    );
+  }
+
   private _mountRoutes() {
     this._login();
     this._clubs();
+    this._matchs();
   }
 
   get routes() {

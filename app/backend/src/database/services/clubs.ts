@@ -1,21 +1,18 @@
 import { Service } from 'typedi';
 import * as Repository from '../repositories';
 import code from '../../environments/statusCode';
-import HandlerToken from '../../utils/handlerToken';
 import msgs from '../../environments/msgsError';
-import camelizeKeys from '../../utils/camelizeKeys';
 
 @Service()
 export default class ClubsService {
   constructor(
     readonly clubsRepository: Repository.Clubs,
-    readonly handlerToken = HandlerToken,
   ) {}
 
   getAll = async () => {
     const { clubsRepository } = this;
     const clubs = await clubsRepository.findAll();
-    return { code: code.OK, result: camelizeKeys(clubs) };
+    return { code: code.OK, result: clubs };
   };
 
   getById = async (id: string) => {

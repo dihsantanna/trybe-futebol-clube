@@ -4,7 +4,7 @@ import Clubs from '../models/clubs';
 @Service()
 export default class ClubsRepository {
   findAll = async () => {
-    const result = await Clubs.findAll({ raw: true });
+    const result = await Clubs.findAll();
     return result;
   };
 
