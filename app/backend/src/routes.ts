@@ -58,6 +58,12 @@ export default class Routes {
       validator.matchs,
       matchsController.create,
     );
+
+    route.patch(
+      '/matchs/:id/finish',
+      validator.token,
+      matchsController.finish,
+    );
   }
 
   private _mountRoutes() {

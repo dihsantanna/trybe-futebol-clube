@@ -28,4 +28,10 @@ export default class MatchsService {
 
     return { code: code.CREATED, result };
   };
+
+  finish = async (id: number) => {
+    const { matchsRepository } = this;
+    const [result] = await matchsRepository.finish(id);
+    return { code: result ? code.OK : code.BAD_REQUEST };
+  };
 }

@@ -28,4 +28,11 @@ export default class MatchsController {
     const { code, result } = await matchsService.create(body);
     res.status(code).json(result);
   };
+
+  finish = async (req: Request, res: Response) => {
+    const { matchsService } = this;
+    const { id } = req.params;
+    const { code } = await matchsService.finish(Number(id));
+    return res.status(code).json();
+  };
 }
