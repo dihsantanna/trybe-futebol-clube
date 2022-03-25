@@ -403,6 +403,11 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
         .stub(Matchs, 'update')
         .resolves([1] as unknown as [number , Matchs[]]);
     })
+
+    after(() => {
+      (Matchs.update as sinon.SinonStub).restore();
+    });
+
     it('não é possível atualizar partida passando token invalido', async () => {
       chaiHttpResponse = await getChaiHttpResponse(
         'PATCH',
@@ -442,7 +447,11 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
       );
     });
 
-    it('retorna status 400', async () => {
+    after(() => {
+      (Matchs.update as sinon.SinonStub).restore();
+    });
+
+    it('retorna status 400', () => {
       expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
     });
     
