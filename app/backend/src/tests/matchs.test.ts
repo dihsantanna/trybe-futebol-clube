@@ -5,7 +5,8 @@ import chaiHttp = require('chai-http');
 import Matchs from '../database/models/matchs';
 import * as Mock from './mock';
 import { StatusCode as code, msgs } from '../environments';
-import { getChaiHttpResponse, MatchsBody as body } from './utils';
+import { getChaiHttpResponse } from './helpers';
+import { MatchsBody as body } from './utils';
 
 const matchsResponseSuccess = Mock.MatchsMock;
 
@@ -391,6 +392,40 @@ describe('Testa endpoint POST /matchs', () => {
 
     });
 
+  });
+
+});
+
+describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
+  describe('Ao passar um id válido é possível salvar status "inProgress" como "false"', () => {
+    before(async () => {
+      sinon
+        .stub(Matchs, 'update')
+        .resolves([1] as unknown as [number , Matchs[]]);
+    })
+    it('não é possível atualizar partida passando token invalido', async () => {
+      chaiHttpResponse = await getChaiHttpResponse(
+        'PATCH',
+        '/matchs/:3/finish',
+        '',
+        'token_invalido',
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.TOKEN_INVALID);
+    });
+
+    it('ao atualizar partida com sucesso retorna status 200', async () => {
+      chaiHttpResponse = await getChaiHttpResponse(
+        'PATCH',
+        '/matchs/:3/finish',
+        '',
+        Mock.token,
+      );
+
+      expect(chaiHttpResponse).to.have.status(code.OK);
+    });
+    
   });
 
 });
