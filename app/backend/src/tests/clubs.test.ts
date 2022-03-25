@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 import Clubs from '../database/models/clubs';
 import * as Mock from './mock/';
 import { StatusCode as code, msgs } from '../environments/';
-import { getChaiHttpResponse } from './utils/';
+import { getChaiHttpResponse } from './helpers';
 
 const clubsResponseSuccess = Mock.ClubsMock;
 

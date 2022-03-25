@@ -428,4 +428,24 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
     
   });
 
+  describe('Ao passar um id inválido', () => {
+    before(async () => {
+      sinon
+        .stub(Matchs, 'update')
+        .resolves([0] as unknown as [number , Matchs[]]);
+
+      chaiHttpResponse = await getChaiHttpResponse(
+        'PATCH',
+        '/matchs/:999/finish',
+        '',
+        Mock.token,
+      );
+    });
+
+    it('retorna status 400', async () => {
+      expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
+    });
+    
+  });
+
 });

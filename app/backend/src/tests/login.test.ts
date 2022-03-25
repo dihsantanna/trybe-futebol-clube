@@ -7,7 +7,8 @@ import Users from '../database/models/users';
 import * as Mock from './mock/';
 import { ILoginResponse } from '../interfaces';
 import { StatusCode as code, msgs } from '../environments/';
-import { UsersLogin, getChaiHttpResponse } from './utils/';
+import { getChaiHttpResponse } from './helpers';
+import { UsersLogin } from './utils/';
 
 const loginResponseSuccess: ILoginResponse = {
   user: {
