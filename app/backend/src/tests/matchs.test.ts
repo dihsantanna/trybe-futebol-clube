@@ -347,8 +347,8 @@ describe('Testa endpoint POST /matchs', () => {
         (Clubs.findAndCountAll as sinon.SinonStub).restore();
       });
 
-      it('retorna status code 400', () => {
-        expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
+      it('retorna status code 401', () => {
+        expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       });
 
       it('retorna a mensagem de erro "Team not found" no body', () => {
@@ -382,8 +382,8 @@ describe('Testa endpoint POST /matchs', () => {
         (Clubs.findAndCountAll as sinon.SinonStub).restore();
       });
 
-      it('retorna status code 400', () => {
-        expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
+      it('retorna status code 401', () => {
+        expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       });
 
       it('retorna a mensagem de erro "Team not found" no body', () => {

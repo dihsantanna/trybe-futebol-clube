@@ -6,7 +6,7 @@ const msgs = {
   TOKEN_REQUIRED: { message: 'Token is required' },
   ALL_FIELD_REQUIRED: { message: 'All fields are required' },
   EQUAL_TEAMS: { message: 'It is not possible to create a match with two equal teams' },
-  TEAM_NOT_FOUND: { message: 'Team not found' },
+  TEAM_NOT_FOUND: { message: 'There is no team with such id!' },
 };
 
 export default msgs;
