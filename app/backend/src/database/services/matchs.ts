@@ -1,9 +1,7 @@
-import { Service } from 'typedi';
 import { IMatchs, IMatchsResult } from '../../interfaces';
 import * as Repository from '../repositories';
 import code from '../../environments/statusCode';
 
-@Service()
 export default class MatchsService {
   constructor(
     readonly matchsRepository: Repository.Matchs,
@@ -24,20 +22,22 @@ export default class MatchsService {
 
   create = async (match: IMatchs) => {
     const { matchsRepository } = this;
-    const result = await matchsRepository.create(match);
+    const value = match;
+    value.inProgress = true;
+    const result = await matchsRepository.create(value);
 
     return { code: code.CREATED, result };
   };
 
   finish = async (id: number) => {
     const { matchsRepository } = this;
-    const [result] = await matchsRepository.finish(id);
-    return { code: result ? code.OK : code.BAD_REQUEST };
+    const result = await matchsRepository.finish(id);
+    return { code: result[0] ? code.OK : code.BAD_REQUEST, result };
   };
 
   resultUpdate = async (id: number, results: IMatchsResult) => {
     const { matchsRepository } = this;
-    const [result] = await matchsRepository.resultUpdate(id, results);
-    return { code: result ? code.OK : code.BAD_REQUEST };
+    const result = await matchsRepository.resultUpdate(id, results);
+    return { code: result[0] ? code.OK : code.BAD_REQUEST, result };
   };
 }

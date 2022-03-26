@@ -1,7 +1,5 @@
-import { Service } from 'typedi';
 import Clubs from '../models/clubs';
 
-@Service()
 export default class ClubsRepository {
   findAll = async () => {
     const result = await Clubs.findAll();

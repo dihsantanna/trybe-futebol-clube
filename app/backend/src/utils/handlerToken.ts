@@ -1,10 +1,8 @@
 import jwt = require('jsonwebtoken');
 import { readFile } from 'fs/promises';
-import { Service } from 'typedi';
 import { IUser, IVerifyError } from '../interfaces';
 
-@Service()
-class HandlerToken {
+export default class HandlerToken {
   constructor(
     private _secret: Promise<string> = readFile('jwt.evaluation.key', 'utf8'),
   ) {}
@@ -24,5 +22,3 @@ class HandlerToken {
     return result as IVerifyError | IUser;
   };
 }
-
-export default new HandlerToken();

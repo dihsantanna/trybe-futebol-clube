@@ -1,16 +1,14 @@
 import bcrypt = require('bcryptjs');
-import { Service } from 'typedi';
 import * as Repository from '../repositories';
 import { ILogin, ILoginResponse, IUser, IVerifyError } from '../../interfaces';
 import code from '../../environments/statusCode';
 import HandlerToken from '../../utils/handlerToken';
 import msgs from '../../environments/msgsError';
 
-@Service()
 export default class LoginService {
   constructor(
     readonly loginRepository: Repository.Login,
-    readonly handlerToken = HandlerToken,
+    readonly handlerToken: HandlerToken,
   ) {}
 
   login = async ({ email, password }: ILogin) => {

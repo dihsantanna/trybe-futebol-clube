@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { Container } from 'typedi';
-import * as Controllers from '../database/controllers';
+import * as injectors from '../helpers/injectors';
 
-const clubsController = Container.get(Controllers.Clubs);
+const clubsController = injectors.clubs();
 
 const route = Router();
 

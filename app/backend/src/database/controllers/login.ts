@@ -1,8 +1,6 @@
 import { Response, Request } from 'express';
-import { Service } from 'typedi';
 import * as Services from '../services';
 
-@Service()
 export default class LoginController {
   constructor(
     readonly loginService: Services.Login,

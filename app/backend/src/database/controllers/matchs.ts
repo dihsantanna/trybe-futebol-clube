@@ -1,8 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
-import { Service } from 'typedi';
 import * as Services from '../services';
 
-@Service()
 export default class MatchsController {
   constructor(
     readonly matchsService: Services.Matchs,
@@ -32,8 +30,8 @@ export default class MatchsController {
   finish = async (req: Request, res: Response) => {
     const { matchsService } = this;
     const { id } = req.params;
-    const { code } = await matchsService.finish(+id);
-    return res.status(code).json();
+    const { code, result } = await matchsService.finish(+id);
+    return res.status(code).json(result);
   };
 
   resultUpdate = async (req: Request, res: Response, next: NextFunction) => {
@@ -41,7 +39,7 @@ export default class MatchsController {
     const { id } = req.params;
     const { body } = req;
     if (!body) return next();
-    const { code } = await matchsService.resultUpdate(+id, body);
-    return res.status(code).json();
+    const { code, result } = await matchsService.resultUpdate(+id, body);
+    return res.status(code).json(result);
   };
 }

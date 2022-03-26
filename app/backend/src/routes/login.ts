@@ -1,11 +1,10 @@
 import { Router } from 'express';
-import { Container } from 'typedi';
-import * as Controllers from '../database/controllers';
+import * as injectors from '../helpers/injectors';
 import Validator from '../validations';
 
 const validator = new Validator();
 
-const loginController = Container.get(Controllers.Login);
+const loginController = injectors.login();
 
 const route = Router();
 

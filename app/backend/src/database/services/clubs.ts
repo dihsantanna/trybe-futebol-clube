@@ -1,9 +1,7 @@
-import { Service } from 'typedi';
 import * as Repository from '../repositories';
 import code from '../../environments/statusCode';
 import msgs from '../../environments/msgsError';
 
-@Service()
 export default class ClubsService {
   constructor(
     readonly clubsRepository: Repository.Clubs,

@@ -1,9 +1,7 @@
-import { Service } from 'typedi';
 import Matchs from '../models/matchs';
 import Clubs from '../models/clubs';
 import { IMatchs, IMatchsResult } from '../../interfaces';
 
-@Service()
 export default class MatchsRepository {
   findAll = async () => {
     const result = await Matchs.findAll({
