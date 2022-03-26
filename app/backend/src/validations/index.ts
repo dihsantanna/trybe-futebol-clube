@@ -39,9 +39,9 @@ export default class Validator {
 
   matchs = async (req: Request, res: Response, next: NextFunction) => {
     const { body } = req;
-    const { error } = Schemas.MatchsSchema.validate(body);
+    // const { error } = Schemas.MatchsSchema.validate(body);
 
-    if (error) return res.status(code.BAD_REQUEST).json({ message: error.message });
+    // if (error) return res.status(code.UNAUTHORIZED).json({ message: error.message });
 
     const { homeTeam, awayTeam } = body;
 
