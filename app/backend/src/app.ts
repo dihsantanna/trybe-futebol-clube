@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import * as express from 'express';
 import bodyParser = require('body-parser');
 import cors = require('cors');
