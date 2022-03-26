@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import Matchs from '../models/matchs';
 import Clubs from '../models/clubs';
-import { IMatchs } from '../../interfaces';
+import { IMatchs, IMatchsResult } from '../../interfaces';
 
 @Service()
 export default class MatchsRepository {
@@ -46,6 +46,12 @@ export default class MatchsRepository {
 
   finish = async (id: number) => {
     const result = await Matchs.update({ inProgress: false }, { where: { id } });
+
+    return result;
+  };
+
+  resultUpdate = async (id: number, { homeTeamGoals, awayTeamGoals }: IMatchsResult) => {
+    const result = await Matchs.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
 
     return result;
   };

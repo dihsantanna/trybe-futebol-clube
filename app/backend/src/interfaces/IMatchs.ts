@@ -1,8 +1,8 @@
-interface IMatchs {
+import IMatchsResult from './IMatchsResult';
+
+interface IMatchs extends IMatchsResult {
   homeTeam: number,
-  homeTeamGoals: number,
   awayTeam: number,
-  awayTeamGoals: number,
   inProgress: boolean,
 }
 

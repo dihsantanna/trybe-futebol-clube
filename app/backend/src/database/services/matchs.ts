@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { IMatchs } from '../../interfaces';
+import { IMatchs, IMatchsResult } from '../../interfaces';
 import * as Repository from '../repositories';
 import code from '../../environments/statusCode';
 
@@ -32,6 +32,12 @@ export default class MatchsService {
   finish = async (id: number) => {
     const { matchsRepository } = this;
     const [result] = await matchsRepository.finish(id);
+    return { code: result ? code.OK : code.BAD_REQUEST };
+  };
+
+  resultUpdate = async (id: number, results: IMatchsResult) => {
+    const { matchsRepository } = this;
+    const [result] = await matchsRepository.resultUpdate(id, results);
     return { code: result ? code.OK : code.BAD_REQUEST };
   };
 }

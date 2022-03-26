@@ -3,6 +3,7 @@ import IUser from './IUser';
 import ILoginResponse from './ILoginResponse';
 import IVerifyError from './IVerifyError';
 import IMatchs from './IMatchs';
+import IMatchsResult from './IMatchsResult';
 
 export {
   ILogin,
@@ -10,4 +11,5 @@ export {
   ILoginResponse,
   IVerifyError,
   IMatchs,
+  IMatchsResult,
 };

@@ -28,4 +28,11 @@ route.patch(
   matchsController.finish,
 );
 
+route.patch(
+  '/:id/',
+  validator.token,
+  matchsController.resultUpdate,
+  matchsController.finish,
+);
+
 export default route;
