@@ -1,11 +1,8 @@
 import 'reflect-metadata';
 import * as express from 'express';
-import { Container } from 'typedi';
 import bodyParser = require('body-parser');
 import cors = require('cors');
-import Routes from './routes';
-
-const { routes } = Container.get(Routes);
+import * as Routes from './routes';
 
 class App {
   public app: express.Express;
@@ -27,7 +24,9 @@ class App {
     this.app.use(bodyParser.json());
     this.app.use(cors());
 
-    this.app.use('/', routes);
+    this.app.use('/login', Routes.login);
+    this.app.use('/clubs', Routes.clubs);
+    this.app.use('/matchs', Routes.matchs);
   }
 
   public start(PORT: string | number):void {
