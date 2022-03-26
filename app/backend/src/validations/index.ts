@@ -45,7 +45,7 @@ export default class Validator {
 
     const { homeTeam, awayTeam } = body;
 
-    if (homeTeam === awayTeam) return res.status(code.BAD_REQUEST).json(msgs.EQUAL_TEAMS);
+    if (homeTeam === awayTeam) return res.status(code.UNAUTHORIZED).json(msgs.EQUAL_TEAMS);
 
     if (!(await this._teamsExists(homeTeam, awayTeam))) {
       return res.status(code.UNAUTHORIZED).json(msgs.TEAM_NOT_FOUND);

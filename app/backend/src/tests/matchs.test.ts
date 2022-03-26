@@ -312,8 +312,8 @@ describe('Testa endpoint POST /matchs', () => {
 
       });
 
-      it('retorna status code 400', () => {
-        expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
+      it('retorna status code 401', () => {
+        expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       });
 
       it('retorna a mensagem de erro "It is not possible to create a match with two equal teams" no body', () => {
