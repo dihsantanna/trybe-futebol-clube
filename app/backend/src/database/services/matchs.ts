@@ -23,8 +23,10 @@ export default class MatchsService {
   };
 
   create = async (match: IMatchs) => {
+    const value = match;
+    value.inProgress = true;
     const { matchsRepository } = this;
-    const result = await matchsRepository.create(match);
+    const result = await matchsRepository.create(value);
 
     return { code: code.CREATED, result };
   };
