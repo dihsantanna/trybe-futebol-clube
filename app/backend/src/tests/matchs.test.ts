@@ -158,21 +158,13 @@ describe('Testa endpoint POST /matchs', () => {
 
   });
 
-  describe('Passados token e dados validos testa a criação de nova partida "finalizada"', () => {
+  describe('Não é possível criar partida já finalizada "finalizada"', () => {
     const { createdFinished } = body;
-
-    clubsMock = Mock.ClubsMock
-      .filter((club) => club.id === createdFinished.homeTeam
-        || club.id === createdFinished.awayTeam) as Clubs[];
 
     before(async () => {
       sinon
         .stub(Matchs, 'create')
         .resolves(matchsCreatedFinished as unknown as Matchs);
-
-      sinon
-      .stub(Clubs, 'findAndCountAll')
-      .resolves({ count: 2, rows: clubsMock});
 
       chaiHttpResponse = await getChaiHttpResponse(
         'POST',
@@ -184,15 +176,14 @@ describe('Testa endpoint POST /matchs', () => {
 
     after(() => {
       (Matchs.create as sinon.SinonStub).restore();
-      (Clubs.findAndCountAll as sinon.SinonStub).restore();
     });
 
-    it('retorna status code 201', () => {
-      expect(chaiHttpResponse).to.have.status(code.CREATED);
+    it('retorna status code 400', () => {
+      expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
     });
 
-    it('retorna no body um objeto da partida criada', () => {
-      expect(chaiHttpResponse.body).to.be.deep.equal(matchsCreatedFinished);
+    it('retorna no body uma mensagem de erro', () => {
+      expect(chaiHttpResponse.body).to.be.deep.equal(msgs.INPROGRESS_IS_FALSE);
     });
 
   });
@@ -287,18 +278,6 @@ describe('Testa endpoint POST /matchs', () => {
         expect(chaiHttpResponse.body).to.be.deep.equal(msgs.ALL_FIELD_REQUIRED);
       });
 
-      it('não é passado campo "inProgress"', async () => {
-        chaiHttpResponse = await getChaiHttpResponse(
-          'POST',
-          '/matchs',
-          body.withoutInProgress,
-          Mock.token,
-        )
-
-        expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
-        expect(chaiHttpResponse.body).to.be.deep.equal(msgs.ALL_FIELD_REQUIRED);
-      });
-
     });
 
     describe('Caso seja passado times iguais', () => {
@@ -351,7 +330,7 @@ describe('Testa endpoint POST /matchs', () => {
         expect(chaiHttpResponse).to.have.status(code.UNAUTHORIZED);
       });
 
-      it('retorna a mensagem de erro "Team not found" no body', () => {
+      it('retorna a mensagem de erro "There is no team with such id!" no body', () => {
         expect(chaiHttpResponse.body).to.be.deep.equal(msgs.TEAM_NOT_FOUND);
       });
 
@@ -411,7 +390,7 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
     it('não é possível atualizar partida passando token invalido', async () => {
       chaiHttpResponse = await getChaiHttpResponse(
         'PATCH',
-        '/matchs/:3/finish',
+        '/matchs/3/finish',
         '',
         'token_invalido',
       );
@@ -423,7 +402,7 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
     it('ao atualizar partida com sucesso retorna status 200', async () => {
       chaiHttpResponse = await getChaiHttpResponse(
         'PATCH',
-        '/matchs/:3/finish',
+        '/matchs/3/finish',
         '',
         Mock.token,
       );
@@ -441,7 +420,7 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
 
       chaiHttpResponse = await getChaiHttpResponse(
         'PATCH',
-        '/matchs/:999/finish',
+        '/matchs/999/finish',
         '',
         Mock.token,
       );

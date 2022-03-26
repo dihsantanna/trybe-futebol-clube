@@ -3,7 +3,7 @@ interface IMatchs {
   homeTeamGoals: number,
   awayTeam: number,
   awayTeamGoals: number,
-  inProgress: boolean,
+  inProgress?: boolean,
 }
 
 export default IMatchs;

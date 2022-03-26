@@ -15,9 +15,7 @@ const matchsSchema = Joi.object<IMatchs>({
   awayTeamGoals: Joi.number().integer().required().messages({
     'any.required': msgs.ALL_FIELD_REQUIRED.message,
   }),
-  inProgress: Joi.boolean().required().messages({
-    'any.required': msgs.ALL_FIELD_REQUIRED.message,
-  }),
+  inProgress: Joi.bool().equal(true),
 });
 
 export default matchsSchema;
