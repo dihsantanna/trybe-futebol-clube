@@ -359,7 +359,7 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
     it('ao atualizar partida com sucesso retorna status 200', async () => {
       chaiHttpResponse = await getChaiHttpResponse(
         'PATCH',
-        '/matchs/:3/finish',
+        '/matchs/3/finish',
         '',
         Mock.token,
       );
@@ -389,6 +389,57 @@ describe('Testa o endpoint PATCH /matchs/:id/finish', () => {
 
     it('retorna status 400', () => {
       expect(chaiHttpResponse).to.have.status(code.BAD_REQUEST);
+    });
+    
+  });
+
+});
+
+describe('Testa endpoint PATCH /matchs/:id', () => {
+  describe('Passando id da partida e novo placar no body é possível atualizar placar da partida', () => {
+    before(async () => {
+      sinon
+        .stub(Matchs, 'update')
+        .resolves([1] as unknown as [number , Matchs[]]);
+
+      chaiHttpResponse = await getChaiHttpResponse(
+        'PATCH',
+        '/matchs/3',
+        { homeTeamGoals: 5, awayTeamGoals: 2 },
+        Mock.token,
+      );
+    })
+
+    after(() => {
+      (Matchs.update as sinon.SinonStub).restore();
+    });
+
+    it('retorna status code 200', () => {
+      expect(chaiHttpResponse).to.have.status(code.OK);
+    });
+
+  });
+
+  describe('Passando id da partida sem nada no body é possível atualizar inProgress para false', () => {
+    before(async () => {
+      sinon
+        .stub(Matchs, 'update')
+        .resolves([1] as unknown as [number , Matchs[]]);
+
+      chaiHttpResponse = await getChaiHttpResponse(
+        'PATCH',
+        '/matchs/3',
+        '',
+        Mock.token,
+      );
+    })
+
+    after(() => {
+      (Matchs.update as sinon.SinonStub).restore();
+    });
+
+    it('retorna status code 200', () => {
+      expect(chaiHttpResponse).to.have.status(code.OK);
     });
     
   });

@@ -1,3 +1,3 @@
-import { loginInjector, clubsInjector, matchsInjector } from './injector';
+import { loginInjector, clubsInjector, matchsInjector, handlerToken } from './injector';
 
-export { loginInjector as login, clubsInjector as clubs, matchsInjector as matchs };
+export { loginInjector as login, clubsInjector as clubs, matchsInjector as matchs, handlerToken };

@@ -3,7 +3,7 @@ import * as Controller from '../../database/controllers';
 import * as Service from '../../database/services';
 import * as Repo from '../../database/repositories';
 
-const handlerToken = new HandlerToken();
+export const handlerToken = new HandlerToken();
 
 export const loginInjector = () => {
   const loginRepo = new Repo.Login();

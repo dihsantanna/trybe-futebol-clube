@@ -1,7 +1,8 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-import HandlerToken from '../utils/handlerToken';
+import { handlerToken } from '../helpers/injectors';
 import chaiHttp = require('chai-http');
+
 
 import Users from '../database/models/users';
 import * as Mock from './mock/';
@@ -37,7 +38,7 @@ describe('Testa endpoint POST /login', () => {
         .resolves({ ...Mock.Users[0] } as Users);
 
       sinon
-        .stub(HandlerToken, 'generate')
+        .stub(handlerToken, 'generate')
         .resolves(Mock.token);
 
       chaiHttpResponse = await getChaiHttpResponse(
@@ -49,7 +50,7 @@ describe('Testa endpoint POST /login', () => {
 
     after(()=>{
       (Users.findOne as sinon.SinonStub).restore();
-      (HandlerToken.generate as sinon.SinonStub).restore();
+      (handlerToken.generate as sinon.SinonStub).restore();
     })
 
     it('retorna status code "200"', () => {
@@ -157,7 +158,7 @@ describe('Testa endpoint GET /login/validate', () => {
         .resolves({ ...Mock.Users[0] } as Users);
 
       sinon
-        .stub(HandlerToken, 'verify')
+        .stub(handlerToken, 'verify')
         .resolves(Mock.Users[0])
 
       chaiHttpResponse = await getChaiHttpResponse(
@@ -170,7 +171,7 @@ describe('Testa endpoint GET /login/validate', () => {
 
     after(()=>{
       (Users.findOne as sinon.SinonStub).restore();
-      (HandlerToken.verify as sinon.SinonStub).restore();
+      (handlerToken.verify as sinon.SinonStub).restore();
     });
 
     it('retorna status code 200', () => {
