@@ -22,3 +22,10 @@ export const matchsInjector = () => {
   const matchsService = new Service.Matchs(matchsRepo);
   return new Controller.Matchs(matchsService);
 };
+
+export const leaderBoardInjector = () => {
+  const matchsRepo = new Repo.Matchs();
+  const clubsRepo = new Repo.Clubs();
+  const leaderBoardService = new Service.LeaderBoards(matchsRepo, clubsRepo);
+  return new Controller.LeaderBoards(leaderBoardService);
+};

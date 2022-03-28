@@ -4,6 +4,8 @@ import ILoginResponse from './ILoginResponse';
 import IVerifyError from './IVerifyError';
 import IMatchs from './IMatchs';
 import IMatchsResult from './IMatchsResult';
+import IMatchsAndClubNames from './IMatchsAndClubNames';
+import IInfoTeams from './IInfoTeams';
 
 export {
   ILogin,
@@ -12,4 +14,6 @@ export {
   IVerifyError,
   IMatchs,
   IMatchsResult,
+  IMatchsAndClubNames,
+  IInfoTeams,
 };
