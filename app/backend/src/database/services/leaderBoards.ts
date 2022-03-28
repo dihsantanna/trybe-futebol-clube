@@ -1,7 +1,6 @@
 import { IInfoTeams, IMatchsAndClubNames } from '../../interfaces';
 import * as Repository from '../repositories';
 import { StatusCode as code } from '../../environments';
-import Matchs from '../models/matchs';
 
 const initialInfos = {
   name: '',
@@ -76,7 +75,7 @@ export default class LeaderBoardsService {
   readonly statisticsHomeTeam = (id: number, clubName: string, matchs: IMatchsAndClubNames[]) => {
     const { calcPoints, efficiency } = this;
     return matchs.reduce((acc, curr) => {
-      if (curr.homeTeam === id) {
+      if (!curr.inProgress && curr.homeTeam === id) {
         const points = calcPoints(curr.homeTeamGoals, curr.awayTeamGoals);
         acc.name = clubName;
         acc.totalPoints += points;
@@ -98,7 +97,7 @@ export default class LeaderBoardsService {
   readonly statisticsAwayTeam = (id: number, clubName: string, matchs: IMatchsAndClubNames[]) => {
     const { calcPoints, efficiency } = this;
     return matchs.reduce((acc, curr) => {
-      if (curr.awayTeam === id) {
+      if (!curr.inProgress && curr.awayTeam === id) {
         const points = calcPoints(curr.awayTeamGoals, curr.homeTeamGoals);
         acc.name = clubName;
         acc.totalPoints += points;
@@ -150,9 +149,9 @@ export default class LeaderBoardsService {
   };
 
   homeTeamsRank = async () => {
-    // const { matchsRepository } = this;
+    const { matchsRepository } = this;
     const { clubsRepository, statisticsHomeTeam, sortRules } = this;
-    const matchs = await Matchs.findAll() as unknown as IMatchsAndClubNames[];
+    const matchs = await matchsRepository.findAll() as unknown as IMatchsAndClubNames[];
     const clubs = await clubsRepository.findAll();
     const result = await Promise.all(clubs
       .map(({ id, clubName }) => statisticsHomeTeam(id, clubName, matchs)));
