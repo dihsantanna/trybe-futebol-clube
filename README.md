@@ -59,3 +59,6 @@ Para adicionar uma partida é necessário usuário e senha, portanto a pessoa de
   email: "admin@admin.com",
   password: "senha_admin"
   ```
+
+***
+**Em breve estarei disponibilizado o deploy da aplicação fullstack.
