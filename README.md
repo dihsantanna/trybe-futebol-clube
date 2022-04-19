@@ -57,7 +57,7 @@ Para adicionar uma partida é necessário usuário e senha, portanto a pessoa de
 - Para logar basta inserir:
   ```json
   email: "admin@admin.com",
-  password: "senha_admin"
+  password: "secret_admin"
   ```
 
 ***
