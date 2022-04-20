@@ -34,14 +34,16 @@ Para adicionar uma partida é necessário usuário e senha, portanto a pessoa de
 
 ---
 
-# Instruções rodar o projeto:
+# Instalação do projeto
+
+## Executado com Docker:
 
 1. Clone o repositório
   * `git clone git@github.com:dihsantanna/trybe-futebol-clube.git`.
   * Entre na pasta do repositório que você acabou de clonar:
     * `cd trybe-futebol-clube`
 
-2. Instale as dependências [**Caso existam**]
+2. Instale as dependências
   * `npm install`
 
 3. Execute a aplicação utilizando o *docker compose*
@@ -50,6 +52,21 @@ Para adicionar uma partida é necessário usuário e senha, portanto a pessoa de
 
 4. Para parar a execução:
   * execute o comando `npm run compose:down` 
+
+---
+
+## Executando com sem o docker
+
+`IMPORTANTE`: Caso queira executar tudo sem utilizar o docker será necessário configurar as variáveis de ambiente dentro de `app/backend`. 
+* renomeie o arquivo `.env.example` para `.env`;
+* adicione as chaves `DB_HOST`, `DB_USER` e `DB_PASS` com as informações do seu banco de dados `mysql` local.
+
+1. Execute os passos 1 e 2 do executando com Docker;
+2. Na raiz do projeto execute:
+* `npm run backend`
+3. Abra outro terminal e na raiz do projeto execute:
+* `npm run frontend`
+
 ---
 
 ### Login
