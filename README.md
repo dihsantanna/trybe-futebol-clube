@@ -295,6 +295,57 @@ A resposta deve ser de status `200` com uma `string` contendo a `role` do usuár
 
       **Atenção:** O mesmo endpoint pode ser usado para finalizar uma partida em andamento, basta não passar um body na requisição.
     
+### Leaderboard
 
+1. Requisições do tipo **GET**.
+    * Acesse o endpoint `http://localhost:3001/leaderboard` para retornar a ordenação de classificação dos times segundo as partidas já encerradas.
+      - A ordenação da tabela é feita seguindo as seguintes regras :
+      `1° Total de pontos, 2º Total de Vitórias, 3º Saldo de gols, 4º Gols a favor, 5º Gols contra.` 
+      - retorno esperado de ser semelhante a este:
+      ```json
+      [
+        {
+          "name": "Palmeiras",
+          "totalPoints": 13,
+          "totalGames": 5,
+          "totalVictories": 4,
+          "totalDraws": 1,
+          "totalLosses": 0,
+          "goalsFavor": 17,
+          "goalsOwn": 5,
+          "goalsBalance": 12,
+          "efficiency": 86.67
+        },
+        {
+          "name": "Corinthians",
+          "totalPoints": 12,
+          "totalGames": 5,
+          "totalVictories": 4,
+          "totalDraws": 0,
+          "totalLosses": 1,
+          "goalsFavor": 12,
+          "goalsOwn": 3,
+          "goalsBalance": 9,
+          "efficiency": 80
+        },
+        {
+          "name": "Santos",
+          "totalPoints": 11,
+          "totalGames": 5,
+          "totalVictories": 3,
+          "totalDraws": 2,
+          "totalLosses": 0,
+          "goalsFavor": 12,
+          "goalsOwn": 6,
+          "goalsBalance": 6,
+          "efficiency": 73.33
+        },
+        ...
+      ]
+      ```
+
+      - também é possível filtrar pelos `jogos em casa` e `fora de casa` , basta usar os endpoints:
+        - `http://localhost:3001/leaderboard/home` para jogos em casa;
+        - `http://localhost:3001/leaderboard/away` para jogos fora de casa;
 ***
 **Em breve estarei disponibilizado o deploy da aplicação fullstack.
