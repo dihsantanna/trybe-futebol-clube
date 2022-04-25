@@ -73,7 +73,7 @@ const LeaderboardTable = ({ currentFilter }) => {
               efficiency,
             },
             index) => (
-              <tr key={ name }>
+              <tr key={ `${name}-${index}` }>
                 <td
                   className="score-board-classification"
                   data-testid={ `score_boarding__classification_${index + 1}` }
