@@ -1,5 +1,7 @@
 # Boas vindas ao repositório do TFC - Trybe Futebol Clube! ⚽️
 
+[Agora a aplicação está online :D](https://trybe-futebol-club-dihsantanna.herokuapp.com/)
+
 ![Exemplo app front](./front-example.png)
 
 O `TFC` é um site informativo sobre partidas e classificações de futebol! ⚽️
@@ -348,4 +350,3 @@ A resposta deve ser de status `200` com uma `string` contendo a `role` do usuár
         - `http://localhost:3001/leaderboard/home` para jogos em casa;
         - `http://localhost:3001/leaderboard/away` para jogos fora de casa;
 ***
-**Em breve estarei disponibilizado o deploy da aplicação fullstack.
